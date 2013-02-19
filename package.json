@@ -1,0 +1,25 @@
+{
+	"name": "graceful-shut",
+	"version": "0.0.5",
+	"description": "Graceful shutdown with domains and cluster support",
+	"keywords": ["graceful", "shutdown", "domain"],
+	"author": {
+		"name": "Gabriel Llamas",
+		"email": "gaglekas@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Gagle/Node-GracefulShut.git"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"dependencies": {
+		"error-provider": "*"
+	},
+	"licenses": [{
+		"type": "MIT",
+		"url": "http://www.opensource.org/licenses/mit-license.html"
+	}],
+	"main": "lib/graceful-shut"
+}
