@@ -68,7 +68,7 @@ Creates a "graceful application" that emits `error`, `start` and `shutdown` even
 
 <a name="dom"></a>
 __Grace#dom()__  
-Returns the domain used internally that is listenig for errors. Useful when you want to use [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) to redirect errors to the internal domain.
+Returns the domain used internally that is listenig for errors. Useful when you want to use [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback) to redirect errors to the internal domain.
 
 <a name="shutdown"></a>
 __Grace#shutdown(callback)__  
@@ -98,7 +98,7 @@ An optional callback can be passed. It will be executed when the exit has been f
 
 <a name="event-error"></a>
 __error__  
-Emitted when an unhandled exception has been thrown or has been redirected to the domain with [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback). Exceptions thrown inside this listener will kill the process, be careful.
+Emitted when an unhandled exception has been thrown or has been redirected to the domain with [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback). Exceptions thrown inside this listener will kill the process, be careful.
 
 <a name="event-shutdown"></a>
 __shutdown__  
