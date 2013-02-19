@@ -25,9 +25,9 @@ var log = {
 		this._stream = fs.createWriteStream (this._file,
 				{ flags: "a", encoding: "utf8" });
 	},
-	uncaught: function (error){console.log(232)
+	uncaught: function (error){
 		//If the log it's not open print the error to console and exit
-		if (typeof error === "object" && error.code === "LOG_CLOSED"){
+		if (error instanceof Error && error.code === "LOG_CLOSED"){
 			console.error (error instanceof Error ? error.stack : error);
 			app.shutdown ();
 		}
