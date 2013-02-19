@@ -45,8 +45,8 @@ app.on ("shutdown", function (cb){
 	s.end ();
 });
 
-//Always set a timeout or the process will never end if the shutdown() function
-//never calls the callback due to an error
+//Always set a timeout or the process will never end if the shutdown listener
+//never calls the callback due to an error or whatever
 app.timeout (1000, function (cb){
 	console.log ("forced shutdown");
 	cb ();
