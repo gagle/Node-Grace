@@ -1,5 +1,7 @@
 "use strict";
 
+//Visit localhost:1337 and play russian roulette!
+
 var http = require ("http");
 var gs = require ("../lib/graceful-shut");
 
@@ -34,7 +36,4 @@ app.on ("start", function (){
 	}).listen (1337, "127.0.0.1");
 });
 
-app.on ("shutdown", function (){})
-
-//Visit localhost:1337 and play russian roulette!
 app.start ();
