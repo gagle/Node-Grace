@@ -19,7 +19,7 @@ app.on ("error", function (error){
 
 app.on ("start", function (){
 	var bullets = 6;
-	var bullet = Math.floor (Math.random ()*bullets);console.log(bullet)
+	var bullet = Math.floor (Math.random ()*bullets);
 	var attempts = 0;
 	
 	http.createServer (function (req, res){
