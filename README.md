@@ -58,7 +58,7 @@ Take a look at the [examples](https://github.com/Gagle/Node-GracefulShut/blob/ma
 
 - [gs.create()](#create)
 - [Grace#dom()](#dom)
-- [Grace#shutdown([code])](#shutdown)
+- [Grace#shutdown([exitCode])](#shutdown)
 - [Grace#start()](#start)
 - [Grace#timeout(ms[, callback])](#timeout)
 
@@ -71,7 +71,7 @@ __Grace#dom()__
 Returns the domain used internally that is listenig for errors. Useful when you want to use [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback) to redirect errors to the internal domain.
 
 <a name="shutdown"></a>
-__Grace#shutdown([code])__  
+__Grace#shutdown([exitCode])__  
 Programatically shutdowns the Node.js process. The listener attached to the `shutdown` event will be called before shutting down the process. On Windows this function must be called in order to shutdown the process even if there's no pending events in the event loop queue because the process is continuously reading the stdin. On Linux it's not needed to call it when the event loop is emty because the process automatically finishes, but the shutdown listener is not called, so for compatibility and reusability of the same code on different platforms it's recommended to always call to `shutdown()` both on Windows and Linux when you want exit.
 
 Calling to `process.exit()` will exit your application without calling the shutdown listener. Use it if you want to exit immediately but I recommend to always call to the `shutdown()` function and set a timeout to give an opportunity to gracefully shutdown before forcing the exit. So, if you want to exit, use `Grace#shutdown()` instead of `process.exit()`.
