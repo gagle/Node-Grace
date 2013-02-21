@@ -31,7 +31,7 @@ app.on ("error", function (error){
 
 app.on ("start", function (){
 	//On Windows shutdown() must be called in order to call the shutdown listener
-	//and exit. On linux is not needed to finish the process but the shutdown
+	//and exit. On Linux is not needed to finish the process but the shutdown
 	//listener won't be called. Therefore, if you want to always call the shutdown
 	//listener, always call to shutdown().
 	app.shutdown ();
