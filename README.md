@@ -64,7 +64,7 @@ Take a look at the [examples](https://github.com/Gagle/Node-GracefulShut/blob/ma
 
 <a name="create"></a>
 __gs.create()__  
-Creates a "graceful application" that emits `error`, `start` and `shutdown` events. Only one "graceful application" should be created per Node.js process.
+Creates a "graceful application" that emits `error`, `start` and `shutdown` events. Only one "graceful application" can be created per Node.js process.
 
 <a name="dom"></a>
 __Grace#dom()__  
