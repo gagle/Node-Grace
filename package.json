@@ -1,6 +1,6 @@
 {
 	"name": "graceful-shut",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Graceful shutdown with domains and cluster support",
 	"keywords": ["graceful", "shutdown", "domain"],
 	"author": {

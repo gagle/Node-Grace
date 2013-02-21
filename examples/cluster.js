@@ -75,8 +75,9 @@ app.on ("start", function (){
 			console.log ("MASTER: worker " + worker.process.pid + " is now online");
 		});
 		
-		cluster.on ("exit", function (worker){
-			console.log ("MASTER: worker " + worker.process.pid + " finished");
+		cluster.on ("exit", function (worker, code){
+			console.log ("MASTER: worker " + worker.process.pid + " finished, code " +
+					code);
 			if (!--remaining){
 				console.log ("MASTER: All workers have finished");
 			}
@@ -91,14 +92,15 @@ app.on ("start", function (){
 		var server = http.createServer (function (req, res){
 			res.writeHead (200, { "content-type": "text/plain" });
 			res.end ("Suicide!! (" + process.pid + ")\n");
-			app.shutdown ();
+			//Exit worker with code 100
+			app.shutdown (100);
 		}).listen (1337, "127.0.0.1", function (){
 			log.write ("WORKER (" + process.pid + "): server up and listening");
 		});
 	}
 });
 
-app.on ("shutdown", function (cb){
+app.on ("shutdown", function (cb){console.log(123)
 	if (cluster.isMaster){
 		//Close the log file on master
 		log.close (function (){

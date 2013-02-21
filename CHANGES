@@ -1,3 +1,9 @@
+v0.1.1 (xx Feb 2013)
+	Added exit code to "shutdown()".
+	Fixed exit code when a worker dies due to an error in the start or shutdown
+		listeners or a callback with error in the shutdown, now returns 1.
+	Some bugfixes.
+	
 v0.1.0 (19 Feb 2013)
 	Added "dom()".
 	Removed domain properties from the emitted error objects.
