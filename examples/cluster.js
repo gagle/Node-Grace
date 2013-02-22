@@ -94,13 +94,13 @@ app.on ("start", function (){
 			res.end ("Suicide!! (" + process.pid + ")\n");
 			//Exit worker with code 100
 			app.shutdown (100);
-		}).listen (1337, "127.0.0.1", function (){
+		}).listen (1337, "localhost", function (){
 			log.write ("WORKER (" + process.pid + "): server up and listening");
 		});
 	}
 });
 
-app.on ("shutdown", function (cb){console.log(123)
+app.on ("shutdown", function (cb){
 	if (cluster.isMaster){
 		//Close the log file on master
 		log.close (function (){
@@ -114,6 +114,11 @@ app.on ("shutdown", function (cb){console.log(123)
 		//Close the log file on each worker
 		log.close (cb);
 	}
+});
+
+app.on ("exit", function (code){
+	console.log ((cluster.isMaster ? "MASTER" : "WORKER") + ": bye! (" + code +
+			")");
 });
 
 app.timeout (1000, function (cb){

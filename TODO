@@ -1,0 +1,31 @@
+restart()
+	Gracefully restarts
+	
+	Examples:
+	
+		On the master:
+		
+		restart({ code: 200 }):
+			kill workers and master
+			master exit code 200
+		restart():
+			restart workers in parallel, all the workers are killed and then started
+			no exit code, therefore master is not killed
+		restart({ min: 2 })
+			kill workers but maintain always 2 active workers while restarting them
+			e.g. 4 workers: a, b, c, d.
+				kill a
+				kill b
+				start a
+				kill c
+				start b
+				kill d
+				start c
+				start d
+		
+		On the worker:
+		
+		restart(100):
+			kill worker with exit code 100
+
+restart event

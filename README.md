@@ -5,7 +5,7 @@ _Node.js project_
 
 #### Graceful shutdown with domains and cluster support ####
 
-Version: 0.1.1
+Version: 0.1.2
 
 Provides an event-based mechanism to start and gracefully shutdown a Node.js process when a SIGINT signal is sent to it. Because Windows doesn't have POSIX signals a different method has to be used (reading the stdin for a ctrl-c key). The process can be gracefully killed pressing ctrl-c (Windows & Linux) and sending to it a SIGINT signal (Linux). It also uses domains so uncaught exceptions doesn't kill the process. Furthermore, if you use workers, the shutdown task takes care about that and transparently manages them in order to always guarantee a graceful shutdown providing to the user a last opportunity to clean up tasks asynchronously.
 
@@ -42,9 +42,13 @@ app.on ("shutdown", function (cb){
 	cb ();
 });
 
+app.on ("exit", function (code){
+	console.log ("bye (" + code + ")");
+});
+
 app.timeout (1000, function (cb){
 	//The timeout is used if the shutdown task takes more time than expected
-	//The callback MUST be ALWAYS called 
+	//The callback must be always called 
 	console.error ("forced shutdown!");
 	cb ();
 });
@@ -93,6 +97,7 @@ An optional callback can be passed. It will be executed when the exit has been f
 #### Events ####
 
 - [error](#event-error)
+- [exit](#event-exit)
 - [shutdown](#event-shutdown)
 - [start](#event-start)
 
@@ -100,9 +105,13 @@ An optional callback can be passed. It will be executed when the exit has been f
 __error__  
 Emitted when an unhandled exception has been thrown or has been redirected to the domain with [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback). Exceptions thrown inside this listener will kill the process, be careful.
 
+<a name="event-exit"></a>
+__exit__  
+Emitted when the process is going to die. The event loop doesn't work at this point so asynchronous tasks won't work. Tipically used to print something in console. The exit code is passed as a parameter.
+
 <a name="event-shutdown"></a>
 __shutdown__  
-Emitted when the Node.js process is going to finalize. This is the last chance to gracefully shutdown the process so this is the place to close any open resources like database connections, flush buffered data to disk, etc. The listener receives a callback to call it when all the clean up tasks are done, call it or the process will hang up. You can also pass an error to the callback and it will be emitted back again and redirected to the `error` event listener. This event is fired in 2 circumstances:
+Emitted when the Node.js process is going to finalize. This is the last chance to gracefully shutdown the process so this is the place to close any open resources like database connections, flush buffered data to disk, etc. A callback is passed to the listener to call it when all the clean up tasks are done, call it or the process will hang up. You can also pass an error to the callback and it will be emitted back again and redirected to the `error` event listener. This event is fired in 2 circumstances:
 
 - Ctrl-c key or SIGINT signal is received. On Windows only the master process can receive a SIGINT (from a ctrl-c). If the master receives a ctrl-c/SIGINT and it uses workers, they will receive a `shutdown` event so they will be automatically finished.
 - `Grace#shutdown()` is called. If it's called on the master and you use workers all of them will receive a `shutdown` event and will be disconnected. If you call to `shutdown()` directly from a worker it will be destroyed.

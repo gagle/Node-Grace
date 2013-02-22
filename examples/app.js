@@ -45,6 +45,10 @@ app.on ("shutdown", function (cb){
 	s.end ();
 });
 
+app.on ("exit", function (code){
+	console.log ("bye (" + code + ")");
+});
+
 //Always set a timeout or the process will never end if the shutdown listener
 //never calls the callback due to an error or whatever
 app.timeout (1000, function (cb){
