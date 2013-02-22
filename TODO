@@ -29,3 +29,11 @@ restart()
 			kill worker with exit code 100
 
 restart event
+
+When all the workers die the master dies automatically without calling the
+	shutdown function. Possibilities:
+	
+	1. Block the master until ctrl-c and let the user decide what to do. On
+		 Windows just remove the rl.close() statement. FIns a wu to block on Linux.
+	2. Instead of blocking the master, find a way to call the shutdown function
+		 before die.
