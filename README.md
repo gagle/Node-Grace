@@ -3,7 +3,6 @@ graceful-shut
 
 _Node.js project_
 
-***
 ## Warning
 Because it's pretty hard to write concurrent code, treat with the master and the workers, overriding source code, supporting Windows and Linux and writing a transparent API, this module is in a beta state until it reaches v1.0.0.
 
