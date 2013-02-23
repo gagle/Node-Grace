@@ -29,7 +29,7 @@
 		
 		On the worker:
 		
-		restart(100):
+		restart({ code: 100 }):
 			kill worker with exit code 100
 
 - When all the workers die the master dies automatically without calling the
