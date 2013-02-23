@@ -16,7 +16,7 @@ v0.1.0 (19 Feb 2013)
 v0.0.4 (16 Feb 2013)
 	Uncaught exceptions were killing the application.
 	Exit timeout now kills correctly the master/worker (keep-alive was preventing
-		to kill the worker)
+		to kill the worker).
 
 v0.0.3 (16 Feb 2013)
 	Prevent from calling "shutdown()" more than one time.
