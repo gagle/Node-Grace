@@ -1,4 +1,8 @@
-restart()
+- rename module to "grace"
+
+- restart event
+
+- restart() function
 	Gracefully restarts
 	
 	Examples:
@@ -28,12 +32,5 @@ restart()
 		restart(100):
 			kill worker with exit code 100
 
-restart event
-
-When all the workers die the master dies automatically without calling the
-	shutdown function. Possibilities:
-	
-	1. Block the master until ctrl-c and let the user decide what to do. On
-		 Windows just remove the rl.close() statement. FIns a wu to block on Linux.
-	2. Instead of blocking the master, find a way to call the shutdown function
-		 before die.
+- When all the workers die the master dies automatically without calling the
+	shutdown function. Call the shutdown function.
