@@ -9,13 +9,15 @@
 	
 		On the master:
 		
-		restart({ code: 200 }):
+		restart({ code: 200, delay: 2000 }):
 			kill workers and master
 			master exit code 200
+			restarts after 2000ms
 		restart():
 			restart workers in parallel, all the workers are killed and then started
 			no exit code, therefore master is not killed
-		restart({ min: 2 })
+			no delay
+		restart({ min: 2, delay: 1000 })
 			kill workers but maintain always 2 active workers while restarting them
 			e.g. 4 workers: a, b, c, d.
 				kill a
@@ -26,11 +28,13 @@
 				kill d
 				start c
 				start d
+			each worker is restarted after 1000ms
 		
 		On the worker:
 		
 		restart({ code: 100 }):
 			kill worker with exit code 100
+			no delay
 
 - When all the workers die the master dies automatically without calling the
 	shutdown function. Call the shutdown function.
