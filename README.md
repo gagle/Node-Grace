@@ -11,7 +11,7 @@ It's working pretty well with the provided examples and is actively tested in ed
 
 #### Graceful shutdown/restart with domains and cluster support ####
 
-Version: 0.1.4
+Version: 0.1.5
 
 Provides an event-based mechanism to start and gracefully shutdown a Node.js process when a SIGINT signal is sent to it. Because Windows doesn't have POSIX signals a different method has to be used (reading the stdin for a ctrl-c key). The process can be gracefully killed pressing ctrl-c (Windows & Linux) and sending to it a SIGINT signal (Linux). It also uses domains so uncaught exceptions doesn't kill the process. Furthermore, if you use workers, the shutdown task takes care about that and transparently manages them in order to always guarantee a graceful shutdown providing to the user a last opportunity to clean up tasks asynchronously.
 
@@ -122,10 +122,11 @@ Emitted when the process is going to die. The event loop doesn't work at this po
 
 <a name="event-shutdown"></a>
 __shutdown__  
-Emitted when the Node.js process is going to finalize. This is the last chance to gracefully shutdown the process so this is the place to close any open resources like database connections, flush buffered data to disk, etc. A callback is passed to the listener to call it when all the clean up tasks are done, call it or the process will hang up. You can also pass an error to the callback and it will be emitted back again and redirected to the `error` event listener. This event is fired in 2 circumstances:
+Emitted when the Node.js process is going to finalize. This is the last chance to gracefully shutdown the process so this is the place to close any open resources like database connections, flush buffered data to disk, etc. A callback is passed to the listener to call it when all the clean up tasks are done, call it or the process will hang up. You can also pass an error to the callback and it will be emitted back again and redirected to the `error` event listener. This event is fired in 3 circumstances:
 
 - Ctrl-c key or SIGINT signal is received. On Windows only the master process can receive a SIGINT (from a ctrl-c). If the master receives a ctrl-c/SIGINT and it uses workers, they will receive a `shutdown` event so they will be automatically finished.
 - `Grace#shutdown()` is called. If it's called on the master and you use workers all of them will receive a `shutdown` event and will be disconnected. If you call to `shutdown()` directly from a worker it will be destroyed.
+- When all the workers die the `shutdown` event is fired in the master automatically.
 
 Is also possible to directly call to `disconnect()` and `destroy()` in a worker. If you call to `disconnect` the `shutdown` event will be fired and if you call to `destroy()` it will be directly killed without firing a `shutdown` event and the "graceful application" will be informed about this in order to correctly manage the remaining workers.
 

@@ -33,6 +33,3 @@
 		restart({ code: 100 }):
 			kill worker with exit code 100
 			no delay
-
-- When all the workers die the master dies automatically without calling the
-	shutdown function. Call the shutdown function.

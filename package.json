@@ -1,6 +1,6 @@
 {
 	"name": "grace",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Graceful shutdown/restart with domains and cluster support",
 	"keywords": ["graceful", "shutdown", "restart", "domain"],
 	"author": {
