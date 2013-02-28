@@ -1,5 +1,3 @@
-- rename module to "grace"
-
 - restart event
 
 - restart() function

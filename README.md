@@ -1,5 +1,5 @@
-graceful-shut
-=============
+grace
+=====
 
 _Node.js project_
 
@@ -9,9 +9,9 @@ Because it's pretty hard to write concurrent code, treat with the master and the
 It's working pretty well with the provided examples and is actively tested in edge cases. If you find a bug, please report it.
 ***
 
-#### Graceful shutdown with domains and cluster support ####
+#### Graceful shutdown/restart with domains and cluster support ####
 
-Version: 0.1.3
+Version: 0.1.4
 
 Provides an event-based mechanism to start and gracefully shutdown a Node.js process when a SIGINT signal is sent to it. Because Windows doesn't have POSIX signals a different method has to be used (reading the stdin for a ctrl-c key). The process can be gracefully killed pressing ctrl-c (Windows & Linux) and sending to it a SIGINT signal (Linux). It also uses domains so uncaught exceptions doesn't kill the process. Furthermore, if you use workers, the shutdown task takes care about that and transparently manages them in order to always guarantee a graceful shutdown providing to the user a last opportunity to clean up tasks asynchronously.
 
@@ -68,6 +68,7 @@ Take a look at the [examples](https://github.com/Gagle/Node-GracefulShut/blob/ma
 
 - [gs.create()](#create)
 - [Grace#dom()](#dom)
+- [Grace#redirectError(error)](#redirectError)
 - [Grace#shutdown([exitCode])](#shutdown)
 - [Grace#start()](#start)
 - [Grace#timeout(ms[, callback])](#timeout)
@@ -79,6 +80,10 @@ Creates a "graceful application" that emits `error`, `start` and `shutdown` even
 <a name="dom"></a>
 __Grace#dom()__  
 Returns the domain used internally that is listenig for errors. Useful when you want to use [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback) to redirect errors to the internal domain.
+
+<a name="redirectError"></a>
+__Grace#redirectError(error)__  
+Redirects the error to the `error` event listener.
 
 <a name="shutdown"></a>
 __Grace#shutdown([exitCode])__  

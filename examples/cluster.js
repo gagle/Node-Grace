@@ -9,7 +9,7 @@ var http = require ("http");
 var cluster = require ("cluster");
 var os = require ("os");
 var fs = require ("fs");
-var gs = require ("../lib/graceful-shut");
+var grace = require ("../lib/grace");
 
 //Log module
 var log = {
@@ -29,7 +29,8 @@ var log = {
 		//If the log it's not open print the error to console and exit
 		if (error instanceof Error && error.code === "LOG_CLOSED"){
 			console.error (error instanceof Error ? error.stack : error);
-			app.shutdown ();
+			app.shutdown (1);
+			return;
 		}
 		
 		try{
@@ -43,7 +44,7 @@ var log = {
 			//it has no sense to continue if we can't log
 			console.error (error instanceof Error ? error.stack : error);
 			console.error (e instanceof Error ? e.stack : e);
-			app.shutdown ();
+			app.shutdown (1);
 		}
 	},
 	write: function (msg){
@@ -57,7 +58,7 @@ var log = {
 	}
 };
 
-var app = gs.create ();
+var app = grace.create ();
 
 app.on ("error", log.uncaught);
 
@@ -89,9 +90,9 @@ app.on ("start", function (){
 	}else{
 		log.write ("WORKER (" + process.pid + "): hello!");
 		
-		var server = http.createServer (function (req, res){
+		http.createServer (function (req, res){
 			res.writeHead (200, { "content-type": "text/plain" });
-			res.end ("Suicide!! (" + process.pid + ")\n");
+			res.end ("Suicide!! (" + process.pid + ")");
 			//Exit worker with code 100
 			app.shutdown (100);
 		}).listen (1337, "localhost", function (){

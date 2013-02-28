@@ -1,9 +1,9 @@
 "use strict";
 
 var fs = require ("fs");
-var gs = require ("../lib/graceful-shut");
+var grace = require ("../lib/grace");
 
-var app = gs.create ();
+var app = grace.create ();
 var s;
 
 app.on ("error", function (error){

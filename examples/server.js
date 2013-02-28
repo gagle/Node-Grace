@@ -3,9 +3,9 @@
 //Visit localhost:1337 and play russian roulette!
 
 var http = require ("http");
-var gs = require ("../lib/graceful-shut");
+var grace = require ("../lib/grace");
 
-var app = gs.create ();
+var app = grace.create ();
 
 app.on ("error", function (error){
 	if (error instanceof Error && error.message === "DEAD"){
