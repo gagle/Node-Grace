@@ -102,7 +102,7 @@ app.on ("exit", function (code){
 
 app.timeout (1000, function (){
 	//The shutdown event never hangs up so this code never executes
-	console.error ("timed out");
+	console.error ("timed out, forcing shutdown");
 });
 
 app.start ();

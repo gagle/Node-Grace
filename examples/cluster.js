@@ -35,12 +35,12 @@ var log = {
 		
 		try{
 			//If this doesn't throw, the error is not LOG_CLOSED and the log has been
-			//opened correctly
+			//open correctly
 			log.write (error);
 		}catch (e){
 			//e.code === "LOG_CLOSED"
 			//The original error is not LOG_CLOSED but the log it's not open, so
-			//first print the original error and then the LOG_ERROR and exit because
+			//first print the original error and then the LOG_CLOSED and exit because
 			//it has no sense to continue if we can't log
 			console.error (error instanceof Error ? error.stack : error);
 			console.error (e instanceof Error ? e.stack : e);
@@ -93,7 +93,6 @@ app.on ("start", function (){
 		http.createServer (function (req, res){
 			res.writeHead (200, { "content-type": "text/plain" });
 			res.end ("Suicide!! (" + process.pid + ")");
-			//Exit worker with code 100
 			app.shutdown (100);
 		}).listen (1337, "localhost", function (){
 			log.write ("WORKER (" + process.pid + "): server up and listening");
