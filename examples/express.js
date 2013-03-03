@@ -55,7 +55,7 @@ app.on ("start", function (){
 				3 types of errors that are handled by the request error handler if any,
 				or by the default error handler:
 				
-				- Compile-time error.
+				- Parse error.
 				
 					null.killer ();
 				
