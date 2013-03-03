@@ -4,9 +4,9 @@
 Visit localhost:1337 and play russian roulette!
 
 This example shows how to write -or at least a good starting point- a robust
-Node.js server that never breaks and has a single function that logs errors
-(the global error handler) instead of having gazillions of try-catches with log
-calls like Java.
+Node.js server that never breaks and has 2 controlled points for handling errors
+(default and request error handlers) instead of having gazillions of try-catches
+like Java.
 */
 
 var express = require ("express");
@@ -31,7 +31,7 @@ app.on ("start", function (){
 	var ex = express ();
 	ex.disable ("x-powered-by");
 	
-	//Request error handler
+	//Request error handler, this should be the first middleware
 	//Capture uncaught exceptions thrown during a request
 	ex.use (app.errorHandler (function (error, req, res, preventDefault, bar){
 		//With preventDefault the default error handler is not called
@@ -52,10 +52,10 @@ app.on ("start", function (){
 			res.send (200, "Nice... (" + attempts + " of " + bullets + ")");
 		}else{
 			/*
-				3 errors that are handled by the request error handler if any, or by the
-				default error handler:
+				3 types of errors that are handled by the request error handler if any,
+				or by the default error handler:
 				
-				- Compile-time error, a TypeError.
+				- Compile-time error.
 				
 					null.killer ();
 				
@@ -74,13 +74,19 @@ app.on ("start", function (){
 		}
 	});
 	
-	//Thrown errors by the express middleware using next(error)
+	//Express error handler: next(error), this should be the last middleware
 	//Redirects to the request error handler if any and falls back to the default
 	//error handler if preventDefault is not called
-	//You can pass any number of parameters and they'll be passed to the request
-	//error handler and to the default error handler if an error is passed to the
-	//next() function
-	ex.use (app.redirectError (" bar"));
+	//You can pass any number of parameters and they'll be passed to the error
+	//handler
+	
+	//2 ways to use the Express error handler:
+	//Shorthand
+	//ex.use (app.redirectError (" bar"));
+	//If you need to do anything before redirecting to the request error handler
+	ex.use (function (error, req, res, next){
+		app.redirectError (error, req, res, " bar");
+	});
 	
 	ex.listen (1337, "localhost");
 });
