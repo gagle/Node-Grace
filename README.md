@@ -11,7 +11,7 @@ It's working pretty well with the provided examples and is actively tested in ed
 
 #### Graceful shutdown/restart with domains and cluster support ####
 
-Version: 0.1.5
+Version: 0.1.6
 
 Provides an event-based mechanism to start and gracefully shutdown a Node.js process when a SIGINT signal is sent to it. Because Windows doesn't have POSIX signals a different method has to be used (reading the stdin for a ctrl-c key). The process can be gracefully killed pressing ctrl-c (Windows & Linux) and sending to it a SIGINT signal (Linux). It also uses domains so uncaught exceptions doesn't kill the process. Furthermore, if you use workers, the shutdown task takes care about that and transparently manages them in order to always guarantee a graceful shutdown providing to the user a last opportunity to clean up tasks asynchronously.
 

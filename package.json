@@ -1,8 +1,9 @@
 {
 	"name": "grace",
-	"version": "0.1.5",
-	"description": "Graceful shutdown/restart with domains and cluster support",
-	"keywords": ["graceful", "shutdown", "restart", "domain"],
+	"version": "0.1.6",
+	"description": "Graceful application with domains, cluster and error handling support",
+	"keywords": ["graceful", "grace", "shutdown", "restart", "domain", "error",
+			"handler", "uncaught", "exception"],
 	"author": {
 		"name": "Gabriel Llamas",
 		"email": "gaglekas@gmail.com"
@@ -16,6 +17,9 @@
 	},
 	"dependencies": {
 		"error-provider": "*"
+	},
+	"devDependencies": {
+		"express": "3.1.x"
 	},
 	"licenses": [{
 		"type": "MIT",

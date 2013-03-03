@@ -1,3 +1,10 @@
+v0.1.6 (02 Feb 2013)
+	Specific request domains has been added.
+	Added "errorHandler()".
+	Modified "redirectError()" behaviour.
+	Modified "dom()" behaviour.
+	Added Express example and how to properly handle errors.
+
 v0.1.5 (28 Feb 2013)
 	When all the workers die the master emits a "shutdown" event.
 
