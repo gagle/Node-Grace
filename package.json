@@ -3,7 +3,7 @@
 	"version": "0.2.0",
 	"description": "Graceful application with domains, cluster, error handling and Express support",
 	"keywords": ["graceful", "grace", "shutdown", "restart", "domain", "error",
-			"handler", "uncaught", "exception"],
+			"handler", "uncaught", "exception", "express"],
 	"author": {
 		"name": "Gabriel Llamas",
 		"email": "gaglekas@gmail.com"
