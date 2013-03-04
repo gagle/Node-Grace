@@ -33,15 +33,15 @@ app.on ("start", function (){
 	
 	//Request error handler, this should be the first middleware
 	//Capture uncaught exceptions thrown during a request
-	ex.use (app.errorHandler (function (error, req, res, preventDefault, bar){
+	ex.use (app.errorHandler (function (error, req, res, preventDefault){
 		//With preventDefault the default error handler is not called
 		//Here you'll typically send to the user a 500 error
 		preventDefault ();
 		
-		res.send (500, "Bad luck" + (bar ? bar : "") + "!\n\nReason: " +
-				error.message);
+		res.send (500, "Bad luck " + req.connection.remoteAddress +
+				"!\n\nReason: " + error.message);
 		
-		app.shutdown ();
+		app.shutdown (1);
 	}));
 	
 	ex.use (function (req, res, next){
@@ -57,7 +57,7 @@ app.on ("start", function (){
 				
 				- Parse error.
 				
-					null.killer ();
+					null.killer;
 				
 				- Bound or intercepted using the request domain.
 				
@@ -68,13 +68,13 @@ app.on ("start", function (){
 					next (new Error ("foo"));
 			*/
 			
-			//null.killer ();
+			null.killer;
 			//require ("fs").readFile ("foo", "utf8", app.dom (req).intercept ());
-			next (new Error ("foo"));
+			//next (new Error ("foo"));
 		}
 	});
 	
-	//Express error handler: next(error), this should be the last middleware
+	//Express error handler, this should be the last middleware
 	//Redirects to the request error handler if any and falls back to the default
 	//error handler if preventDefault is not called
 	//You can pass any number of parameters and they'll be passed to the error
@@ -82,17 +82,17 @@ app.on ("start", function (){
 	
 	//2 ways to use the Express error handler:
 	//Shorthand
-	//ex.use (app.redirectError (" bar"));
+	//ex.use (app.redirectError ());
 	//If you need to do anything before redirecting to the request error handler
 	ex.use (function (error, req, res, next){
-		app.redirectError (error, req, res, " bar");
+		app.redirectError (error, req, res);
 	});
 	
 	ex.listen (1337, "localhost");
 });
 
 app.on ("shutdown", function (cb){
-	console.log ("shutting down...");
+	console.log ("shutting down");
 	cb ();
 });
 

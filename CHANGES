@@ -1,3 +1,6 @@
+v0.2.0 (04 Feb 2013)
+	Full Express support.
+
 v0.1.6 (02 Feb 2013)
 	Specific request domains has been added.
 	Added "errorHandler()".
