@@ -86,6 +86,7 @@ app.on ("start", function (){
 	//If you need to do anything before redirecting to the request error handler
 	ex.use (function (error, req, res, next){
 		app.redirectError (error, req, res);
+		next ();
 	});
 	
 	ex.listen (1337, "localhost");
