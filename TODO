@@ -1,3 +1,6 @@
+- Fails using mongoose, thrown exceptions are captured in the default error
+  handler when they should go to the request error handler
+
 - restart event
 
 - restart() function
