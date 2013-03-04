@@ -1,7 +1,7 @@
 {
 	"name": "grace",
 	"version": "0.1.6",
-	"description": "Graceful application with domains, cluster and error handling support",
+	"description": "Graceful application with domains, cluster, error handling and Express support",
 	"keywords": ["graceful", "grace", "shutdown", "restart", "domain", "error",
 			"handler", "uncaught", "exception"],
 	"author": {

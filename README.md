@@ -9,26 +9,26 @@ Because it's pretty hard to write concurrent code, treat with the master and the
 It's working pretty well with the provided examples and is actively tested in edge cases. If you find a bug, please report it.
 ***
 
-#### Graceful shutdown/restart with domains and cluster support ####
+#### Graceful application with domains, cluster, error handling and Express support ####
 
 Version: 0.1.6
 
-Provides an event-based mechanism to start and gracefully shutdown a Node.js process when a SIGINT signal is sent to it. Because Windows doesn't have POSIX signals a different method has to be used (reading the stdin for a ctrl-c key). The process can be gracefully killed pressing ctrl-c (Windows & Linux) and sending to it a SIGINT signal (Linux). It also uses domains so uncaught exceptions doesn't kill the process. Furthermore, if you use workers, the shutdown task takes care about that and transparently manages them in order to always guarantee a graceful shutdown providing to the user a last opportunity to clean up tasks asynchronously.
+Provides an event-based mechanism to start and gracefully shutdown a web server when a SIGINT signal is sent to it (on Windows the stdin is read for a ctrl-c key). The server can be gracefully killed pressing ctrl-c (Windows and Linux) and sending to it a SIGINT signal (Linux). It also uses domains (global and per request domains), uncaught exceptions doesn't kill the server, absolutely never. Furthermore, if you use workers, the shutdown task takes care of them and transparently manages them in order to always guarantee a graceful shutdown giving to the user a last opportunity to do clean up tasks.
 
 If the process finishes correctly the exit code is 0, otherwise 1. The process can also exit with a custom code.
 
 #### Installation ####
 
 ```
-npm install graceful-shut
+npm install grace
 ```
 
 #### Example ####
 
 ```javascript
-var gs = require ("graceful-shut");
+var grace = require ("grace");
 
-var app = gs.create ();
+var app = grace.create ();
 
 app.on ("error", function (error){
 	//Unhandled and redirected errors
@@ -37,14 +37,15 @@ app.on ("error", function (error){
 
 app.on ("start", function (){
 	//On Windows shutdown() must be called in order to call the shutdown listener
-	//and exit. On Linux is not needed to finish the process but the shutdown
-	//listener won't be called. Therefore, if you want to always call the shutdown
-	//listener, always call to shutdown().
+	//and exit. On Linux is not needed but the shutdown listener won't be called.
+	//Therefore, if you want to always finish gracefully, call to shutdown().
 	app.shutdown ();
 });
 
 app.on ("shutdown", function (cb){
 	//Clean up tasks
+	console.log ("shutting down");
+	//Comment this line and the timeout will do its job
 	cb ();
 });
 
@@ -54,8 +55,7 @@ app.on ("exit", function (code){
 
 app.timeout (1000, function (cb){
 	//The timeout is used if the shutdown task takes more time than expected
-	//The callback must be always called 
-	console.error ("forced shutdown!");
+	console.error ("timed out, forcing shutdown");
 	cb ();
 });
 
