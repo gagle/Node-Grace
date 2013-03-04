@@ -1,3 +1,6 @@
+- Try to remove the express error handler and put it internally right before
+  start listening the socket.
+
 - Fails using mongoose, thrown exceptions are captured in the default error
   handler when they should go to the request error handler
 
