@@ -2,7 +2,8 @@
   start listening the socket.
 
 - Fails using mongoose, thrown exceptions are captured in the default error
-  handler when they should go to the request error handler
+  handler when they should go to the request error handler. Well, it redirects
+	correctly to the request domain but I have an scenario where it fails.
 
 - restart event
 

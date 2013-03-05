@@ -11,7 +11,7 @@ It's working pretty well with the provided examples and is actively tested in ed
 
 #### Graceful application with domains, cluster, error handling and Express support ####
 
-Version: 0.2.0
+Version: 0.2.1
 
 Provides an event-based mechanism to start and gracefully shutdown a web server.
 
@@ -90,7 +90,16 @@ Creates a "graceful application" that emits `error`, `start` and `shutdown` even
 __Grace#dom([request])__  
 Returns the domain used internally that is listenig for errors. Useful when you want to use [Domain#intercept()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domaininterceptcallback) or [Domain#bind()](https://github.com/joyent/node/blob/master/doc/api/domain.markdown#domainbindcallback) to redirect errors to the internal domain.
 
-If no parameters are passed it returns the default domain. If the request is passed it returns the request domain.
+If no parameters are passed it returns the default domain. If the request is passed it returns the request domain, otherwise it returns `null`.
+
+If you are initializing the server (running the code before the http server starts listening a socket) you can use `dom().intercept()` to redirect errors to the default error handler. If you are serving a request you can redirect to the request error handler with `dom(req).intercept()`. If you don't call to `preventDefault` inside the request error handler, the error is redirected automatically to the default error handler, therefore you can have a single point where all the errors are redirected, the default error handler:
+
+```javascript
+app.on ("error", function (error){
+	//This is the only place where you can log fatal errors
+	log.fatal (error);
+});
+```
 
 <a name="errorHandler"></a>
 __Grace#errorHandler([callback])__  

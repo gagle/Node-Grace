@@ -1,7 +1,11 @@
-v0.2.0 (04 Feb 2013)
+v0.2.1 (05 Mar 2013)
+	Removed "next()" in "redirectError()".
+	"dom(obj)" returns null if "obj" is not the request object.
+
+v0.2.0 (04 Mar 2013)
 	Full Express support.
 
-v0.1.6 (02 Feb 2013)
+v0.1.6 (02 Mar 2013)
 	Specific request domains has been added.
 	Added "errorHandler()".
 	Modified "redirectError()" behaviour.

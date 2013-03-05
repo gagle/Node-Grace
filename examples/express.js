@@ -44,7 +44,7 @@ app.on ("start", function (){
 		app.shutdown (1);
 	}));
 	
-	ex.use (function (req, res, next){
+	var shoot = function (req, res, next){
 		res.set ("content-type", "text/plain");
 		
 		attempts++;
@@ -72,7 +72,9 @@ app.on ("start", function (){
 			//require ("fs").readFile ("foo", "utf8", app.dom (req).intercept ());
 			//next (new Error ("foo"));
 		}
-	});
+	};
+	
+	ex.get ("/", shoot);
 	
 	//Express error handler, this should be the last middleware
 	//Redirects to the request error handler if any and falls back to the default
