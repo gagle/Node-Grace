@@ -72,7 +72,7 @@ app.start ();
 
 #### Methods and Properties ####
 
-Take a look at the [examples](https://github.com/Gagle/Node-GracefulShut/blob/master/examples) to fully understand how to use a "graceful application" -especially with workers and Express-. Once you feel comfortable with it you probably will never stop using it because it provides the base of a robust web server.
+Take a look at the [examples](https://github.com/Gagle/Node-Grace/blob/master/examples) to fully understand how to use a "graceful application" -especially with workers and Express-. Once you feel comfortable with it you probably will never stop using it because it provides the base of a robust web server.
 
 - [gs.create()](#create)
 - [Grace#dom([request])](#dom)
