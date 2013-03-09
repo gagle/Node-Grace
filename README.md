@@ -11,7 +11,7 @@ It's working pretty well with the provided examples and is actively tested in ed
 
 #### Graceful application with domains, cluster, error handling and Express support ####
 
-Version: 0.2.1
+Version: 0.2.2
 
 Provides an event-based mechanism to start and gracefully shutdown a web server.
 
@@ -77,7 +77,7 @@ Take a look at the [examples](https://github.com/Gagle/Node-Grace/blob/master/ex
 - [gs.create()](#create)
 - [Grace#dom([request])](#dom)
 - [Grace#errorHandler([callback])](#errorHandler)
-- [Grace#redirectError([error, request, response])](#redirectError)
+- [Grace#redirectError([error[, request, response]])](#redirectError)
 - [Grace#shutdown([exitCode])](#shutdown)
 - [Grace#start()](#start)
 - [Grace#timeout(ms[, callback])](#timeout)
@@ -116,20 +116,40 @@ ex.use (g.errorHandler (function (error, req, res, preventDefault){
 You can also use this function without Express to create per request domains but definitely is not the right way to go. See the [server](https://github.com/Gagle/Node-Grace/blob/master/examples/server.js) example.
 
 <a name="redirectError"></a>
-__Grace#redirectError([error, request, response])__  
-Used with Express in its error handler. Redirects the error to the request error handler and falls back to the default error handler. The Express error handler should the last middleware.
+__Grace#redirectError([error[, request, response]])__  
+Redirects an error to an error handler. It redirects to the default or request error handler depending on the number of parameters.
 
-There are 2 ways to redirect the Express error:
+- 0 parameters.  
+  Express -or any frameworks express-like- is required. It's a shorthand to use the Express error handler.
 
-```javascript
-//Shorthand
-ex.use (g.redirectError ());
+  ```javascript
+  //Express error handler, last middleware
+  ex.use (g.redirectError ());
+  ```
 
-//If you need to do anything before redirecting
-ex.use (function (error, req, res, next){
-	g.redirectError (error, req, res);
-});
-```
+- 1 parameter: error.  
+  Redirects to the default error handler. Useful when you need to do something before redirecting to the default error handler.
+
+	```javascript
+	//This redirects errors to the default error handler but you can't do anything before redirecting
+	asyncFUnction (g.dom ().intercept ());
+	
+	//Solution, use redirectError()
+	asyncFunction (function (error){
+		doSomething ();
+		g.redirectError (error);
+	});
+	```
+	
+- 3 parameters: error, request, response.  
+  Redirects to the request error handler and falls back to the default error handler if `preventDefault()` is not called. Useful when you need to do something before redirecting to the request error handler. It can be used inside the Express error handler.
+
+  ```javascript
+  //Express error handler, last middleware
+  ex.use (function (error, req, res, next){
+		g.redirectError (error, req, res);
+	});
+  ```
 
 <a name="shutdown"></a>
 __Grace#shutdown([exitCode])__  

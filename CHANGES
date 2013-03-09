@@ -1,3 +1,7 @@
+v0.2.2 (09 Mar 2013)
+	"redirectError()" can be used to redirect directly to the default error
+		handler.
+
 v0.2.1 (05 Mar 2013)
 	Removed "next()" in "redirectError()".
 	"dom(obj)" returns null if "obj" is not the request object.
