@@ -1,3 +1,6 @@
+v0.2.4 (16 Mar 2013)
+	Timeouts cleared on exit.
+
 v0.2.3 (15 Mar 2013)
 	Deleted new domain error properties in node v0.10.
 
