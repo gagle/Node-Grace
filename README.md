@@ -21,7 +21,9 @@ It also uses domains (global and per request domains), therefore uncaught except
 
 Furthermore, if you use workers, the shutdown task takes care of them and transparently manages them in order to always guarantee a graceful shutdown giving to the user a last opportunity to clean up resources.
 
-The Express web framework is fully supported. It can also be used without Express but it's not recommended.
+Some timers can prevent the exit so all of them are cleared before emitting an `exit` event, the user may have forgotten to clear them.
+
+The Express web framework -and all the Express-like frameworks- is fully supported.
 
 If the process finishes correctly the exit code is 0, otherwise 1. The process can also exit with a custom code.
 
