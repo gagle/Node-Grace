@@ -117,8 +117,8 @@ app.on ("shutdown", function (cb){
 });
 
 app.on ("exit", function (code){
-	console.log ((cluster.isMaster ? "MASTER" : "WORKER") + ": bye! (" + code +
-			")");
+	console.log ((cluster.isMaster ? "MASTER" : "WORKER") + " (" + process.pid +
+			"): bye! (" + code + ")");
 });
 
 app.timeout (1000, function (cb){

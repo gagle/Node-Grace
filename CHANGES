@@ -1,3 +1,6 @@
+v0.2.3 (15 Mar 2013)
+	Deleted new domain error properties in node v0.10.
+
 v0.2.2 (09 Mar 2013)
 	"redirectError()" can be used to redirect directly to the default error
 		handler.

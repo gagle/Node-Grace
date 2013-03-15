@@ -11,7 +11,7 @@ It's working pretty well with the provided examples and is actively tested in ed
 
 #### Graceful application with domains, cluster, error handling and Express support ####
 
-Version: 0.2.2
+Version: 0.2.3
 
 Provides an event-based mechanism to start and gracefully shutdown a web server.
 
