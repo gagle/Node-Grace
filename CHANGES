@@ -1,3 +1,6 @@
+v0.2.5 (16 Mar 2013)
+	Better timeout management.
+
 v0.2.4 (16 Mar 2013)
 	Timeouts cleared on exit.
 
